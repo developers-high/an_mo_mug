@@ -28,6 +28,11 @@ body {
     padding-bottom: 1.25rem;
 }
 
+.context.list {
+    padding: 0.25rem;
+    padding-bottom:0.5rem;
+}
+
 .context.started{
     font-weight: normal;
     padding-bottom: 1.25rem;
@@ -78,6 +83,8 @@ body {
     transform: translate(-50%, 0%);
     left: 50%;
     text-align: center;
+
+    padding-bottom: 1rem;
 }
 
 .list-container{
@@ -113,8 +120,11 @@ button:hover{
     transition: all 0.4s ease-in-out;
 }
 
-.context-init{
-    opacity: 0;
+button.clicked{
+    background-color: rosybrown;
+    color: #7b031d;
+    border: #7b031d solid;
+    transition: all 0.4s ease-in-out;
 }
 
 /* media query for responsive web */
