@@ -4390,12 +4390,49 @@ function makeTable() {
     number.innerText = CURRENT.size.toString() + "개의 검색 결과가 있습니다.";
     target.appendChild(number);
     
+
+    
+
     for (const i of CURRENT){
+
         const table = document.createElement("div");
         table.classList.add("context", "list");
-        table.innerText = store_json[i.toString()]["name"];
+
+        //하드코딩 안하고 할수 있는 법은 없으려나?
+        //각 요소 분리해서 넣음
+
+        //요소 넣기 하드코딩
+        //각 블럭에 내용 삽입
+        //사진은..어떻게 넣는게 좋을깡
+        const divLeft = document.createElement("div");
+        divLeft.innerText = "사진";
+        const divRight = document.createElement("div");
+        insert_div(divRight, ["div-test"], i, "name");
+        insert_div(divRight, ["div-test"], i, "location");
+        insert_div(divRight, ["div-test","div-test2"], i, "opening_hour");
+        insert_div(divRight, ["div-test"], i, "call");
+        divLeft.classList.add("div-left");
+        divRight.classList.add("div-right");
+        table.appendChild(divLeft);
+        table.appendChild(divRight);
         target.appendChild(table);
     }
+}
+/*  //보기 편하게 일단 여기 넣어둠
+    //table에 div 넣어주는 것
+
+    //location : 넣을 위치
+    //styleList : 넣고싶은 css list
+    //i : 자료번호
+    //divName : string형 json자료 이름   */
+
+function insert_div(location, styleList, i, divName){
+    const wantDiv = document.createElement("div");
+    wantDiv.innerText = store_json[i.toString()][divName];
+    for(style of styleList){
+        wantDiv.classList.add(style);
+    }
+    location.appendChild(wantDiv);
 }
 
 window.onload = function () {

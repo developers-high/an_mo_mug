@@ -62,6 +62,21 @@ body {
     padding-top: 0.625rem;
 }
 
+.div-left {
+    float: left;
+    size: 30%;
+}
+.div-right {
+    float: right;
+    size: 50%;
+}
+.div-test {
+    padding-top: 0.1rem;
+}
+.div-test2 {
+    color: blue;
+}
+
 .flip-hidden{
     margin-bottom: 2rem;
 }
