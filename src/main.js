@@ -4409,7 +4409,7 @@ function makeTable() {
         const divRight = document.createElement("div");
         insert_div(divRight, ["div-test"], i, "name");
         insert_div(divRight, ["div-test"], i, "location");
-        insert_div(divRight, ["div-test","div-test2"], i, "opening_hour");
+        insert_div(divRight, ["div-test", "div-test2"], i, "opening_hour");
         insert_div(divRight, ["div-test"], i, "call");
         divLeft.classList.add("div-left");
         divRight.classList.add("div-right");
