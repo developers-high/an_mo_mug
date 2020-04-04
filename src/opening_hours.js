@@ -6,14 +6,17 @@
     3. 없는 사항이라면, -1로 표기한다.
     4. BT는 "일단은" 모든 요일의 BT로 사용된다. 추후 변경 가능.
     4. 자정을 넘어가는 운영은 운영 안하는 시간을 BT로 취급한다
-       ex)18:00~03:00 => 00:00~23:59, BT:03:00~17:59로 해야함//weekday:주중 여는 시간
-    5. etc 관련 규칙(추가 필요)
+       ex)18:00~03:00 => 00:00~23:59, BT:03:00~17:59로 해야함
+    5. etcs 관련 규칙(추가 필요)
+        x번째주 y요일 휴무 계획이 필요함 => [x,y]    (1-5,0-6)
+        2중배열로 표기함
+        ex) [[-1,-1]]       [[1,3],[2,0]]       ...
 
     //weekday:주중 운영시간
     //sat:토요일
     //sun:일요일
     //BT:Break Time
-    //etc:기타사항         */
+    //etcs:기타사항         */
 var open_json = {
   "0": {
     weekday: [1130, 2130],
@@ -2009,6 +2012,7 @@ var open_json = {
 };
 
 const date = new Date(); //달력 가져오기
+const weekNo = Math.ceil(date.getDate()/7);
 const day = date.getDay() * 1; //요일 (0~6)
 
 function getTime() {
@@ -2017,9 +2021,27 @@ function getTime() {
     //표기된 항목들의 id를 가져와 이용
     const timeContainer = document.getElementById(`${id}`);
     const data = open_json[id];
+
+    //etc휴일 제거
+    let flag = false;
+    for (etc of data["etcs"]) {
+      if (etc[0] == weekNo && etc[1] == day)
+        timeContainer.classList.replace("open", "close"); //빨간색 표기
+      flag = true;
+      break;
+    }
+    if (flag) {
+      continue;
+    }
+
+    if (data["BT"] != -1 && data["BT"][0] < time && time < data["BT"]) {
+      //모든 요일의 BT를 걸러냄
+      timeContainer.classList.replace("open", "close"); //빨간색 표기
+      continue;
+    }
     if (day == 0) {
       //일요일
-      if (data["sun"] != -1 && data["sun"][0] < time && time < data["sun"][1]) {
+      if (data["sun"][0] < time && time < data["sun"][1]) {
         //운영시간 이면
         timeContainer.classList.replace("close", "open"); //녹색 표기
       } else {
@@ -2028,26 +2050,18 @@ function getTime() {
       }
     } else if (day == 6) {
       //토요일
-      if (data["sat"] != -1 && data["sat"][0] < time && time < data["sat"][1]) {
+      if (data["sat"][0] < time && time < data["sat"][1]) {
         timeContainer.classList.replace("close", "open");
       } else {
         timeContainer.classList.replace("open", "close");
       }
     } else {
       //평일
-      if (
-        data["weekday"] != -1 &&
-        data["weekday"][0] < time &&
-        time < data["weekday"][1]
-      ) {
+      if (data["weekday"][0] < time && time < data["weekday"][1]) {
         timeContainer.classList.replace("close", "open");
       } else {
         timeContainer.classList.replace("open", "close");
       }
-    }
-    if (data["BT"] != -1 && data["BT"][0] < time && time < data["BT"]) {
-      //모든 요일의 BT를 걸러냄
-      timeContainer.classList.replace("open", "close"); //빨간색 표기
     }
   }
 }
