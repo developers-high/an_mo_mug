@@ -4390,11 +4390,25 @@ function makeTable() {
     number.innerText = CURRENT.size.toString() + "개의 검색 결과가 있습니다.";
     target.appendChild(number);
     
-    for (const i of CURRENT){
-        const table = document.createElement("div");
-        table.classList.add("context", "list");
-        table.innerText = store_json[i.toString()]["name"];
-        target.appendChild(table);
+    for (const i of CURRENT) {
+        const table_main = document.createElement("div");
+        const table_title = document.createElement("div");
+        const table_info = document.createElement("div");
+        const table_address = document.createElement("div");
+        const table_open = document.createElement("div");
+        table_main.classList.add("mainbox");
+        table_title.classList.add("context", "list");
+        table_title.innerText = store_json[i.toString()]["name"];
+        table_info.classList.add("context", "info")
+        table_address.classList.add("context", "address");
+        table_address.innerText = store_json[i.toString()]["location"];
+        table_open.classList.add("context", "address");
+        table_open.innerText = store_json[i.toString()]["opening_hour"];
+        table_info.append(table_address);
+        table_info.append(table_open);
+        table_main.append(table_title);
+        table_main.append(table_info);
+        target.appendChild(table_main);
     }
 }
 

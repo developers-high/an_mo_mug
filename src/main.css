@@ -1,6 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://fonts.googleapis.com/earlyaccess/notosanskr.css');
+
+
 *{
     box-sizing: border-box;
 }
+
+/*
+body {
+    background-color: antiquewhite;
+    color: black;
+    text-align: center;
+    font-family: "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}*/
+
 
 body {
     background-color: antiquewhite;
@@ -14,16 +30,27 @@ body {
     border: 0;
 }
 
+
 .title {
+    font-family: "Black Han Sans", sans-serif;
     font-weight: lighter;
     padding-top: 2rem;
-    font-size: 3rem;
+    font-size: 5rem;
+}
+
+.mainbox{
+    display:inline-flex;
+    width:-webkit-fill-available;
+    align-items:center;
+
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .context {
     display: inline-block;
     font-size: 1.125rem;
-    font-weight: lighter;
+    font-weight: 100;
     padding: 1.25rem;
     padding-bottom: 1.25rem;
 }
@@ -31,6 +58,44 @@ body {
 .context.list {
     padding: 0.25rem;
     padding-bottom:0.5rem;
+    padding-right:0.5rem;
+    font-weight: normal;
+    float: left;
+
+    position: relative;
+    text-align: right;
+    flex: 1;
+
+    word-break: keep-all;
+}
+
+.context.info{
+    float:right;
+    padding: 0rem;
+    padding-bottom : 0.25rem;
+    font-size:0.8rem;
+
+    flex:1.5;
+
+    display: inline-flex;
+    position: relative;
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+    align-content: start;
+    justify-content: space-around;
+    flex-direction: column;
+
+    word-break: keep-all;
+}
+
+.context.address {
+    padding: 0rem;
+    padding-bottom : 0.25rem;
+    font-size:0.8rem;
+    display:inline-block;
+
+    text-align: left;
 }
 
 .context.started{
@@ -138,10 +203,16 @@ button.clicked{
     body{
         font-size: 16px;
     }
+    .title{
+        font-size: 12vw;
+    }
 }
  
 @media all and (max-width: 599px) and (min-width: 320px) {
     body{
         font-size: 12px;
+    }
+        .title{
+        font-size: 14vw;
     }
 }
