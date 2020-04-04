@@ -2021,7 +2021,7 @@ function getTime() {
     //표기된 항목들의 id를 가져와 이용
     const timeContainer = document.getElementById(`${id}`);
     const data = open_json[id];
-
+    /*
     //etc휴일 제거
     let flag = false;
     for (etc of data["etcs"]) {
@@ -2033,6 +2033,7 @@ function getTime() {
     if (flag) {
       continue;
     }
+    */
 
     if (data["BT"] != -1 && data["BT"][0] < time && time < data["BT"]) {
       //모든 요일의 BT를 걸러냄
