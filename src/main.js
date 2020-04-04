@@ -1853,6 +1853,7 @@ var store_json = {
         "number": "0172",
         "name": "샐러데이",
         "tag": [
+            "양식",
             "#다이어트",
             "#샐러드",
             "#정대후문",
@@ -2210,6 +2211,7 @@ var store_json = {
         "number": "0201",
         "name": "59쌀피자 안암오거리점",
         "tag": [
+            "#참살이길",
             "#피자",
             "#안암로터리",
             "#이공계",
@@ -2308,6 +2310,7 @@ var store_json = {
         "number": "0208",
         "name": "투고샐러드 고려대점",
         "tag": [
+            "#양식",
             "#다이어트",
             "#샐러드",
             "#참살이길",
@@ -3038,6 +3041,7 @@ var store_json = {
         "number": "0276",
         "name": "무아국수",
         "tag": [
+            "#한식",
             "#국수",
             "#법대후문",
             "#포장",
@@ -3588,7 +3592,7 @@ var store_json = {
         "tag": [
             "#피자",
             "#포장",
-            "#안암오거리",
+            "#참살이길",
             "#배달"
         ],
         "location": "서울 동대문구 안암로 82",
@@ -3919,6 +3923,7 @@ var store_json = {
         "number": "0343",
         "name": "다원스시",
         "tag": [
+            "#정문앞",
             "#일식",
             "#고려대역",
             "#포장",
@@ -3974,6 +3979,7 @@ var store_json = {
         "number": "0347",
         "name": "왕십리막창구이",
         "tag": [
+            "#정문앞",
             "#고기",
             "#고려대역",
             "#포장",
@@ -4326,16 +4332,18 @@ var EXCLUSIVE = new Set();
 var MEAT = new Set();
 var BUNSIK = new Set();
 var LIGHT = new Set();
-var ALCOHOL = new Set();
+var LAW = new Set();
+var FOUR = new Set();
+var JEGIDONG = new Set();
+var ALCOHOL = new Set([5, 196, 197, 195, 198, 277, 279]);
 var catList = [WESTERN, JAPANESE, CHINESE, KOREAN,
-    ASIAN, BUNSIK, MEAT, LIGHT, CHAMSARI, ENGINEER, GAEUNSAGIL, POLITICS, FRONTDOOR];
+    ASIAN, BUNSIK, MEAT, LIGHT, CHAMSARI, ENGINEER, GAEUNSAGIL, POLITICS, FRONTDOOR, LAW, FOUR, JEGIDONG];
 
 
 function initial() {
     var btn = document.querySelectorAll("button");
 
     for (var i = 0; i < btn.length; i++) {
-        console.log(i);
         btn[i].addEventListener('click', onClick);
     }
 
@@ -4348,7 +4356,7 @@ function initial() {
             JAPANESE.add(i);
         if (curr.includes('#중식'))
             WESTERN.add(i);
-        if (curr.includes('#양식'))
+        if (curr.includes('#양식') || curr.includes('#파스타')|| curr.includes('#피자'))
             CHINESE.add(i);
         if (curr.includes('#한식'))
             KOREAN.add(i);
@@ -4362,6 +4370,10 @@ function initial() {
             GAEUNSAGIL.add(i);
         if (curr.includes('#정대후문'))
             POLITICS.add(i);
+        if (curr.includes('#법대후문'))
+            LAW.add(i);
+        if (curr.includes('#고대사거리'))
+            FOUR.add(i);
         if (curr.includes('#정문앞'))
             FRONTDOOR.add(i);
         if (curr.includes('#분식'))
@@ -4369,6 +4381,7 @@ function initial() {
         if (curr.includes('#고기') || curr.includes('#족발') || curr.includes('#보쌈') || curr.includes('#치킨'))
             MEAT.add(i);
         if (curr.includes('#경양식')) LIGHT.add(i);
+        if (curr.includes('#제기동')) JEGIDONG.add(i);
     }
 
     CURRENT = new Set([...CURRENT, ...ALL]);
@@ -4392,6 +4405,14 @@ function onClick(e) {
     }
 }
 
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 function makeTable() {
     const target = document.querySelector(".list-container");
     const number = document.createElement("div");
@@ -4401,17 +4422,20 @@ function makeTable() {
         CURRENT = new Set([...CURRENT].filter(x => !catList[i].has(x)));
     }
 
+    var CurrList = shuffle([...CURRENT]);
+
     number.classList.add("context", "started");
-    number.innerText = CURRENT.size.toString() + "개의 검색 결과가 있습니다.";
+    number.innerText = CurrList.length.toString() + "개의 검색 결과가 있습니다.";
     target.appendChild(number);
     
-    for (const i of CURRENT) {
+    for (const i of CurrList) {
         const table_main = document.createElement("div");
         const table_title = document.createElement("div");
         const table_info = document.createElement("div");
         const table_address = document.createElement("div");
         const table_open = document.createElement("div");
         const table_link = document.createElement("a");
+        
         table_main.classList.add("mainbox");
         table_title.classList.add("context", "list");
         table_title.innerText = store_json[i.toString()]["name"];
@@ -4419,8 +4443,12 @@ function makeTable() {
         table_address.classList.add("context", "address");
         table_address.innerText = store_json[i.toString()]["location"];
         table_open.classList.add("context", "address");
-        table_link.setAttribute('href',`https://map.naver.com/v5/search/${store_json[i.toString()]["location"].replace(/ /gi,'%20')}`);
+        
+        table_link.setAttribute('href', `https://map.naver.com/v5/search/${store_json[i.toString()]["location"].replace(/ /gi, '%20')}`);
+        table_link.setAttribute('target', '_blank');
+        
         table_open.innerText = store_json[i.toString()]["opening_hour"];
+        
         table_link.append(table_address);
         table_info.append(table_link);
         table_info.append(table_open);
