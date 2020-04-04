@@ -4444,7 +4444,7 @@ function makeTable() {
         table_address.innerText = store_json[i.toString()]["location"];
         table_open.classList.add("context", "opening_hour", "open");
         table_open.id=i;
-        table_link.setAttribute('href',`https://map.naver.com/v5/search/${store_json[i.toString()]["location"].replace(/ /gi,'%20')}`);
+        table_link.setAttribute('href',`https://map.naver.com/?query=${store_json[i.toString()]["location"].replace(/ /gi,'%20')}`);
         table_link.setAttribute('target', '_blank');
         table_open.innerText = store_json[i.toString()]["opening_hour"];
         
