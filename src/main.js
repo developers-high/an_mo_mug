@@ -32,6 +32,7 @@ var store_json = {
         "number": "0003",
         "name": "싸움의고수 고대점",
         "tag": [
+            "#한식",
             "#보쌈",
             "#참살이길",
             "#포장",
@@ -578,6 +579,7 @@ var store_json = {
         "number": "0049",
         "name": "미스터피자 고대점",
         "tag": [
+            '#양식',
             "#피자",
             "#뷔페",
             "#참살이길",
@@ -769,6 +771,7 @@ var store_json = {
         "number": "0067",
         "name": "히포크라테스 스프 ",
         "tag": [
+            '#양식',
             "#베이커리",
             "#참살이길",
             "#뒷살이길",
@@ -1185,7 +1188,7 @@ var store_json = {
             "#테이크아웃"
         ],
         "location": "서울 성북구 안암로 117",
-        "opening_hour": "오류 제보하기"
+        "opening_hour": "NULL"
     },
     "77": {
         "number": "0102",
@@ -1329,6 +1332,7 @@ var store_json = {
         "name": "원조닭한마리",
         "tag": [
             "#한식",
+            '#고기',
             "#닭곰탕",
             "#정대후문",
             "#혼밥",
@@ -1419,6 +1423,7 @@ var store_json = {
         "number": "0125",
         "name": "한솥도시락 고대원룸촌점",
         "tag": [
+            '#한식',
             "#도시락",
             "#정대후문",
             "#배달",
@@ -3290,6 +3295,7 @@ var store_json = {
         "number": "0296",
         "name": "맥도날드 법대후문",
         "tag": [
+            '#양식',
             "#햄버거",
             "#법대후문",
             "#배달",
@@ -4317,19 +4323,23 @@ var GAEUNSAGIL = new Set();
 var POLITICS = new Set();
 var FRONTDOOR = new Set();
 var EXCLUSIVE = new Set();
+var MEAT = new Set();
+var BUNSIK = new Set();
+var LIGHT = new Set();
+var ALCOHOL = new Set();
 var catList = [WESTERN, JAPANESE, CHINESE, KOREAN,
-    ASIAN, CHAMSARI, ENGINEER, GAEUNSAGIL, POLITICS, FRONTDOOR];
+    ASIAN, BUNSIK, MEAT, LIGHT, CHAMSARI, ENGINEER, GAEUNSAGIL, POLITICS, FRONTDOOR];
 
 
 function initial() {
     var btn = document.querySelectorAll("button");
 
-    for (var i = 0; i < btn.length; i++){
+    for (var i = 0; i < btn.length; i++) {
         console.log(i);
         btn[i].addEventListener('click', onClick);
     }
 
-    for (var i = 0; i < Object.keys(store_json).length; i++){
+    for (var i = 0; i < Object.keys(store_json).length; i++) {
         ALL.add(i);
         
         var curr = store_json[i.toString()]['tag'];
@@ -4354,6 +4364,11 @@ function initial() {
             POLITICS.add(i);
         if (curr.includes('#정문앞'))
             FRONTDOOR.add(i);
+        if (curr.includes('#분식'))
+            BUNSIK.add(i);
+        if (curr.includes('#고기') || curr.includes('#족발') || curr.includes('#보쌈') || curr.includes('#치킨'))
+            MEAT.add(i);
+        if (curr.includes('#경양식')) LIGHT.add(i);
     }
 
     CURRENT = new Set([...CURRENT, ...ALL]);
@@ -4396,6 +4411,7 @@ function makeTable() {
         const table_info = document.createElement("div");
         const table_address = document.createElement("div");
         const table_open = document.createElement("div");
+        const table_link = document.createElement("a");
         table_main.classList.add("mainbox");
         table_title.classList.add("context", "list");
         table_title.innerText = store_json[i.toString()]["name"];
@@ -4403,8 +4419,10 @@ function makeTable() {
         table_address.classList.add("context", "address");
         table_address.innerText = store_json[i.toString()]["location"];
         table_open.classList.add("context", "address");
+        table_link.setAttribute('href',`https://map.naver.com/v5/search/${store_json[i.toString()]["location"].replace(/ /gi,'%20')}`);
         table_open.innerText = store_json[i.toString()]["opening_hour"];
-        table_info.append(table_address);
+        table_link.append(table_address);
+        table_info.append(table_link);
         table_info.append(table_open);
         table_main.append(table_title);
         table_main.append(table_info);
