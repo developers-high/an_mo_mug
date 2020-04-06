@@ -220,7 +220,7 @@ button:hover{
 }
 
 button.clicked{
-    background-color: rosybrown;
+    background-color: wheat;
     color: #7b031d;
     border: #7b031d solid;
     transition: all 0.4s ease-in-out;
